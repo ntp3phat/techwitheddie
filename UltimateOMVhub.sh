@@ -46,7 +46,7 @@ echo " "
 echo "----------------------------------------------------------------"
 echo "Commence Homebridge Setup"
 echo "----------------------------------------------------------------"
-sudo docker run --name homebridge --network host -d --restart unless-stopped -v $(pwd)/homebridge:/server/volume -e PGID=1000 -e PUID=1000 -e HOMEBRIDGE_CONFIG_UI=1 -e HOMEBRIDGE_CONFIG_UI_PORT=8581 oznu/homebridge
+sudo docker run --name homebridge --network host -d --restart unless-stopped -v /srv/conf/homebridge:/server/volume -e PGID=1000 -e PUID=1000 -e HOMEBRIDGE_CONFIG_UI=1 -e HOMEBRIDGE_CONFIG_UI_PORT=8581 oznu/homebridge
 echo "----------------------------------------------------------------"
 echo "Homebridge Setup Completed"
 echo "----------------------------------------------------------------"
@@ -54,38 +54,38 @@ echo " "
 echo " "
 echo " "
 # MQTT Install
-echo "----------------------------------------------------------------"
-echo "Commence MQTT Setup"
-echo "----------------------------------------------------------------"
-sudo mkdir mosquitto
-sudo mkdir mosquitto/config/
-sudo mkdir mosquitto/data/
-sudo wget https://raw.githubusercontent.com/EddieDSuza/maxilife/main/mosquitto.conf -P /home/pi/mosquitto/config/
-sudo docker run -it --name MQTT --restart unless-stopped --net=host -tid -p 1883:1883 -v $(pwd)/mosquitto:/mosquitto/ eclipse-mosquitto
-echo "----------------------------------------------------------------"
-echo "MQTT Setup Completed"
-echo "----------------------------------------------------------------"
-echo " "
-echo " "
-echo " "
+#echo "----------------------------------------------------------------"
+#echo "Commence MQTT Setup"
+#echo "----------------------------------------------------------------"
+#sudo mkdir mosquitto
+#sudo mkdir mosquitto/config/
+#sudo mkdir mosquitto/data/
+#sudo wget https://raw.githubusercontent.com/EddieDSuza/maxilife/main/mosquitto.conf -P /home/pi/mosquitto/config/
+#sudo docker run -it --name MQTT --restart unless-stopped --net=host -tid -p 1883:1883 -v $(pwd)/mosquitto:/mosquitto/ eclipse-mosquitto
+#echo "----------------------------------------------------------------"
+#echo "MQTT Setup Completed"
+#echo "----------------------------------------------------------------"
+#echo " "
+#echo " "
+#echo " "
 # Z2M setup
-echo "----------------------------------------------------------------"
-echo "Commence Zigbee2MQTT Setup"
-echo "----------------------------------------------------------------"
-wget https://raw.githubusercontent.com/EddieDSuza/techwitheddie/main/configuration.yaml -P data
-echo " "
-sudo docker run --name zigbee2mqtt --device=/dev/ttyACM0 --net host --restart unless-stopped -v $(pwd)/data:/app/data -v /run/udev:/run/udev:ro -e TZ=Asia/Dubai koenkk/zigbee2mqtt
-echo "----------------------------------------------------------------"
-echo "Z2M Interface is reachable at homebridge.local:8081"
-echo "----------------------------------------------------------------"
-echo " "
-echo " "
-echo " "
+#echo "----------------------------------------------------------------"
+#echo "Commence Zigbee2MQTT Setup"
+#echo "----------------------------------------------------------------"
+#wget https://raw.githubusercontent.com/EddieDSuza/techwitheddie/main/configuration.yaml -P data
+#echo " "
+#sudo docker run --name zigbee2mqtt --device=/dev/ttyACM0 --net host --restart unless-stopped -v $(pwd)/data:/app/data -v /run/udev:/run/udev:ro -e TZ=Asia/Dubai koenkk/zigbee2mqtt
+#echo "----------------------------------------------------------------"
+#echo "Z2M Interface is reachable at homebridge.local:8081"
+#echo "----------------------------------------------------------------"
+#echo " "
+#echo " "
+#echo " "
 # scrypted setup
 echo "----------------------------------------------------------------"
 echo "Commence Scrypted Setup"
 echo "----------------------------------------------------------------"
-sudo docker run --name="scrypted" --network host -d --restart unless-stopped -v ~/.scrypted/volume:/server/volume koush/scrypted
+sudo docker run --name="scrypted" --network host -d --restart unless-stopped -v /srv/conf/scrypted/volume:/server/volume koush/scrypted
 echo "----------------------------------------------------------------"
 echo "Scrypted Interface is reachable at homebridge.local:10443"
 echo "----------------------------------------------------------------"
@@ -96,7 +96,7 @@ echo " "
 echo "----------------------------------------------------------------"
 echo "Commence HEIMDALL Setup"
 echo "----------------------------------------------------------------"
-sudo docker run --name=heimdall -d --restart unless-stopped -v /home/kodestar/docker/heimdall:/config -e PGID=1000 -e PUID=1000 -p 8201:80 -p 8200:443 linuxserver/heimdall
+sudo docker run --name=heimdall -d --restart unless-stopped -v /srv/conf/heimdall:/config -e PGID=1000 -e PUID=1000 -p 8201:80 -p 8200:443 linuxserver/heimdall
 echo " "
 echo "----------------------------------------------------------------"
 echo "HEIMDALL Interface is reachable at homebridge.local:8201"
@@ -110,5 +110,5 @@ echo "----------------------------------------------------------------"
 echo " "
 echo " "
 echo " "
-echo "Rebooting Now"
-sudo reboot
+echo "Need Rebooting Now"
+#sudo reboot
